@@ -1,0 +1,267 @@
+<div class="card">
+    <h2>Gestion des Expériences</h2>
+
+    <div class="card-content">
+        <!-- Formulaire pour ajouter une nouvelle expérience Assad -->
+        <div class="form-container">
+            <form [formGroup]="experienceAssadForm" (ngSubmit)="addExperienceAssad()">
+                <div class="form-group">
+                    <label for="debut_assad">Date de début :</label>
+                    <input id="debut_assad" type="date" formControlName="debut" class="form-control" />
+                    <small class="text-danger" *ngIf="experienceAssadForm.controls['debut'].invalid && experienceAssadForm.controls['debut'].touched">
+                        *Ce champ est obligatoire.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="fin_assad">Date de fin :</label>
+                    <input id="fin_assad" type="date" formControlName="fin" class="form-control" />
+                    <small class="text-danger" *ngIf="experienceAssadForm.controls['fin'].invalid && experienceAssadForm.controls['fin'].touched">
+                        *Ce champ est obligatoire.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="poste_assad">Poste :</label>
+                    <input id="poste_assad" type="text" formControlName="poste" class="form-control" placeholder="Entrez votre poste" />
+                    <small class="text-danger" *ngIf="experienceAssadForm.controls['poste'].invalid && experienceAssadForm.controls['poste'].touched">
+                        *Ce champ est obligatoire.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="direction_assad">Direction :</label>
+                    <input id="direction_assad" type="text" formControlName="direction" class="form-control" placeholder="Entrez la direction" />
+                    <small class="text-danger" *ngIf="experienceAssadForm.controls['direction'].invalid && experienceAssadForm.controls['direction'].touched">
+                        *Ce champ est obligatoire.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="mode_affectation_assad">Mode d'affectation :</label>
+                    <select id="mode_affectation_assad" formControlName="modeAffectation" class="form-control">
+                        <option value="CDD">CDD</option>
+                        <option value="CDI">CDI</option>
+                        <option value="Stage">Stage</option>
+                    </select>
+                    <small class="text-danger" *ngIf="experienceAssadForm.controls['modeAffectation'].invalid && experienceAssadForm.controls['modeAffectation'].touched">
+                        *Ce champ est obligatoire.
+                    </small>
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="experienceAssadForm.invalid">Ajouter Expérience Assad</button>
+            </form>
+
+            <form [formGroup]="experienceAnterieureForm" (ngSubmit)="addExperienceAnterieure()">
+                <div class="form-group">
+                    <label for="dateDebut">Date de début :</label>
+                    <input id="dateDebut" type="date" formControlName="dateDebut" class="form-control" />
+                    <small class="text-danger" *ngIf="experienceAnterieureForm.controls['dateDebut'].invalid && experienceAnterieureForm.controls['dateDebut'].touched">
+                        *Ce champ est obligatoire.
+                    </small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dateFin">Date de fin :</label>
+                    <input id="dateFin" type="date" formControlName="dateFin" class="form-control" />
+                    <small class="text-danger" *ngIf="experienceAnterieureForm.controls['dateFin'].invalid && experienceAnterieureForm.controls['dateFin'].touched">
+                        *Ce champ est obligatoire.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="poste">Poste :</label>
+                    <input id="poste" type="text" formControlName="poste" class="form-control" placeholder="Entrez votre poste" />
+                    <small class="text-danger" *ngIf="experienceAnterieureForm.controls['poste'].invalid && experienceAnterieureForm.controls['poste'].touched">
+                        *Ce champ est obligatoire.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="societe">Société :</label>
+                    <input id="societe" type="text" formControlName="societe" class="form-control" placeholder="Entrez la société" />
+                    <small class="text-danger" *ngIf="experienceAnterieureForm.controls['societe'].invalid && experienceAnterieureForm.controls['societe'].touched">
+                        *Ce champ est obligatoire.
+                    </small>
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="experienceAnterieureForm.invalid">Ajouter Expérience Antérieure</button>
+            </form>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider"></div>
+
+        <div class="list-container">
+            <h3>Liste des Expériences Assad</h3>
+
+            <div *ngIf="experiencesAssad.length === 0; else experienceAssadList" class="empty-message">
+                📌 Aucune expérience Assad pour ce personnel.
+            </div>
+
+            <ng-template #experienceAssadList>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date de Début</th>
+                            <th>Date de Fin</th>
+                            <th>Poste</th>
+                            <th>Direction</th>
+                            <th>Mode d'affectation</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let expAssad of experiencesAssad">
+                            <td>{{ expAssad.dateDebut | date:'shortDate' }}</td>
+                            <td>{{ expAssad.dateFin | date:'shortDate' }}</td>
+                            <td>{{ expAssad.poste }}</td>
+                            <td>{{ expAssad.direction }}</td>
+                            <td>{{ expAssad.modeAffectation }}</td>
+                            <td>
+                                <p-button icon="pi pi-pencil" severity="warn" [rounded]="true" [text]="true"
+                                    (click)="showDialogAssad(expAssad)">
+                                </p-button>
+                                <p-button icon="pi pi-times" severity="danger" [rounded]="true" [text]="true"
+                                    (click)="deleteExperienceAssad(expAssad.id!)">
+                                </p-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <hr class="divider-horizontal">
+            </ng-template>
+
+            <h3>Liste des expériences Antérieures</h3>
+            <div *ngIf="experiencesAnterieure.length === 0; else experienceAnterieurList" class="empty-message">
+                📌 Aucune expérience Antérieure pour ce personnel.
+            </div>
+            <ng-template #experienceAnterieurList>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date de Début</th>
+                            <th>Date de Fin</th>
+                            <th>Poste</th>
+                            <th>Société</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let expAnterieure of experiencesAnterieure">
+                            <td>{{ expAnterieure.dateDebut | date:'shortDate' }}</td>
+                            <td>{{ expAnterieure.dateFin | date:'shortDate' }}</td>
+                            <td>{{ expAnterieure.poste }}</td>
+                            <td>{{ expAnterieure.societe }}</td>
+                            <td>
+                                <p-button icon="pi pi-pencil" severity="warn" [rounded]="true" [text]="true"
+                                    (click)="showDialogAnterieure(expAnterieure)">
+                                </p-button>
+                                <p-button icon="pi pi-times" severity="danger" [rounded]="true" [text]="true"
+                                    (click)="deleteExperienceAnterieure(expAnterieure.id!)">
+                                </p-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </div>
+    </div>
+<!-- Dialogue pour modifier l'expérience Antérieure -->
+<p-dialog header="Modifier l'Expérience Antérieure" [(visible)]="visibleAnterieure" [modal]="true" [style]="{ width: '25rem' }">
+    <form [formGroup]="experienceAnterieureForm" (ngSubmit)="updateExperienceAnterieure()">
+        <div class="form-group">
+            <label for="editDateDebut">Date de Début :</label>
+            <input id="editDateDebut" type="date" formControlName="dateDebut" class="form-control" />
+            <small class="text-danger" *ngIf="experienceAnterieureForm.controls['dateDebut'].invalid && experienceAnterieureForm.controls['dateDebut'].touched">
+                *Ce champ est obligatoire.
+            </small>
+        </div>
+    
+        <div class="form-group">
+            <label for="editDateFin">Date de Fin :</label>
+            <input id="editDateFin" type="date" formControlName="dateFin" class="form-control" />
+            <small class="text-danger" *ngIf="experienceAnterieureForm.controls['dateFin'].invalid && experienceAnterieureForm.controls['dateFin'].touched">
+                *Ce champ est obligatoire.
+            </small>
+        </div>
+    
+        <div class="form-group">
+            <label for="editPoste">Poste :</label>
+            <input id="editPoste" type="text" formControlName="poste" class="form-control" />
+            <small class="text-danger" *ngIf="experienceAnterieureForm.controls['poste'].invalid && experienceAnterieureForm.controls['poste'].touched">
+                *Ce champ est obligatoire.
+            </small>
+        </div>
+    
+        <div class="form-group">
+            <label for="editSociete">Société :</label>
+            <input id="editSociete" type="text" formControlName="societe" class="form-control" />
+            <small class="text-danger" *ngIf="experienceAnterieureForm.controls['societe'].invalid && experienceAnterieureForm.controls['societe'].touched">
+                *Ce champ est obligatoire.
+            </small>
+        </div>
+    
+        <div class="flex justify-end gap-2 mt-4">
+            <button type="button" (click)="visibleAnterieure = false" class="btn btn-secondary">Annuler</button>
+            <button type="submit" class="btn btn-primary" [disabled]="experienceAnterieureForm.invalid">Enregistrer</button>
+        </div>
+    </form>
+</p-dialog>
+   <!-- Dialogue pour modifier l'expérience Assad -->
+   <p-dialog header="Modifier l'Expérience" [(visible)]="visibleAssad" [modal]="true" [style]="{ width: '25rem' }">
+    <form [formGroup]="experienceAssadForm" (ngSubmit)="updateExperienceAssad()">
+        <div class="form-group">
+            <label for="editDebut">Date de Début :</label>
+            <input id="dateDebut" type="date" formControlName="debut" class="form-control" />
+            <small class="text-danger" *ngIf="experienceAssadForm.controls['debut'].invalid && experienceAssadForm.controls['debut'].touched">
+                *Ce champ est obligatoire.
+            </small>
+        </div>
+    
+        <div class="form-group">
+            <label for="editFin">Date de Fin :</label>
+            <input id="editFin" type="date" formControlName="fin" class="form-control" />
+            <small class="text-danger" *ngIf="experienceAssadForm.controls['fin'].invalid && experienceAssadForm.controls['fin'].touched">
+                *Ce champ est obligatoire.
+            </small>
+        </div>
+    
+        <div class="form-group">
+            <label for="editPoste">Poste :</label>
+            <input id="editPoste" type="text" formControlName="poste" class="form-control" />
+            <small class="text-danger" *ngIf="experienceAssadForm.controls['poste'].invalid && experienceAssadForm.controls['poste'].touched">
+                *Ce champ est obligatoire.
+            </small>
+        </div>
+    
+        <div class="form-group">
+            <label for="editDirection">Direction :</label>
+            <input id="editDirection" type="text" formControlName="direction" class="form-control" />
+            <small class="text-danger" *ngIf="experienceAssadForm.controls['direction'].invalid && experienceAssadForm.controls['direction'].touched">
+                *Ce champ est obligatoire.
+            </small>
+        </div>
+    
+        <div class="form-group">
+            <label for="editModeAffectation">Mode d'affectation :</label>
+            <select id="editModeAffectation" formControlName="modeAffectation" class="form-control">
+                <option value="CDD">CDD</option>
+                <option value="CDI">CDI</option>
+                <option value="Stage">Stage</option>
+            </select>
+            <small class="text-danger" *ngIf="experienceAssadForm.controls['modeAffectation'].invalid && experienceAssadForm.controls['modeAffectation'].touched">
+                *Ce champ est obligatoire.
+            </small>
+        </div>
+    
+        <div class="flex justify-end gap-2 mt-4">
+            <button type="button" (click)="visible = false" class="btn btn-secondary">Annuler</button>
+            <button type="submit" class="btn btn-primary" [disabled]="experienceAssadForm.invalid">Enregistrer</button>
+        </div>
+    </form>
+</p-dialog>
+
+    
+</div>

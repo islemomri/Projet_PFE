@@ -1,0 +1,177 @@
+/* Styles globaux */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #FEECE6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Carte principale avec transparence */
+.card {
+    background: transparent;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 1150 px;
+    margin: auto;
+    backdrop-filter: blur(10px);
+}
+
+/* Structure en deux colonnes */
+.card-content {
+    display: flex;
+    gap: 20px;
+}
+
+/* Formulaire et liste prennent chacun 50% de l'espace */
+.form-container, .list-container {
+    flex: 1;
+}
+
+/* Divider entre les deux parties */
+.divider {
+    width: 2px;
+    background-color: #B1A09B;
+    opacity: 0.6;
+    border-radius: 1px;
+}
+
+
+/* Titres */
+h2, h3 {
+    color: #66B7AD;
+    text-align: center;
+}
+
+/* Formulaires */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.4); /* Légère transparence */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Groupes de champs */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #B1A09B;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #C4FDFB;
+    border-radius: 6px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+/* Boutons */
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background-color: #66B7AD;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #4A8E87;
+}
+
+.btn-secondary {
+    background-color: #B1A09B;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #8C7C76;
+}
+
+/* Tableau */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;  /* Gris clair */
+    color: #333;  /* Gris foncé */
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: rgba(254, 236, 230, 0.918);
+}
+
+.table tbody tr:hover {
+    background-color: rgba(196, 253, 251, 0.7);
+    transition: 0.3s;
+}
+
+
+
+/* Boutons du dialogue */
+p-button {
+    font-size: 14px;
+}
+
+.p-button-secondary {
+    background-color: #B1A09B;
+    color: white;
+}
+
+.p-button-secondary:hover {
+    background-color: #8C7C76;
+}
+
+/* Alignement des boutons du dialogue */
+.flex {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+.empty-message {
+    text-align: center;
+    font-size: 18px;
+    color: #B1A09B;
+    font-weight: bold;
+    margin-top: 20px;
+}
+input.ng-invalid.ng-touched {
+    border: 2px solid red !important;
+    background-color: #ffeeee;
+  }
+  .text-danger {
+    color: red !important;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+  }
+  

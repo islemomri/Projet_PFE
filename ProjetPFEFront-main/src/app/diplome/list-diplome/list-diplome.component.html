@@ -1,0 +1,78 @@
+<p-confirmDialog></p-confirmDialog>
+
+<div class="card">
+  <h2>Liste des Diplômes</h2>
+
+  <button pButton label="Ajouter un diplôme" icon="pi pi-plus" class="p-mb-3" (click)="visible = true"></button>
+  <button pButton label="Ajouter un type de diplôme" icon="pi pi-plus" class="p-mb-3" [routerLink]="['/type']"></button>
+  <p-table [value]="diplomes" [paginator]="true" [rows]="10" [responsive]="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Libellé</th>
+        <th>Type de Diplôme</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-diplome>
+      <tr>
+        <td>{{ diplome.libelle }}</td>
+        <td>{{ diplome.typeDiplome?.libelleTypeDiplome }}</td>
+        <td>
+          <button pButton icon="pi pi-pencil" class="p-button-text p-button-sm" (click)="showEditDialog(diplome)"></button>
+            <button pButton icon="pi pi-trash" class="p-button-text p-button-sm p-button-danger" (click)="confirmDelete(diplome.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Formulaire d'ajout -->
+  <p-dialog header="Ajouter un Diplôme" [(visible)]="visible" [modal]="true" [style]="{ width: '50rem' }">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <div class="p-field">
+        <label for="libelle">Libellé du Diplôme</label>
+        <input pInputText id="libelle" name="libelle" [(ngModel)]="libelleDiplome" required #libelle="ngModel" />
+        <div *ngIf="libelle.invalid && libelle.touched" class="p-error">Libellé est requis</div>
+      </div>
+
+      <div class="p-field">
+        <label for="typeDiplome">Type de Diplôme</label>
+        <p-dropdown id="typeDiplome" [(ngModel)]="selectedTypeId" name="typeDiplome"
+          [options]="typeDiplomes" optionLabel="libelleTypeDiplome" optionValue="id"
+          placeholder="Sélectionnez un type" [showClear]="true">
+        </p-dropdown>
+        <div *ngIf="selectedTypeId == null" class="p-error">Type de diplôme est requis</div>
+      </div>
+
+      <p-footer>
+        <button pButton label="Annuler" icon="pi pi-times" class="p-button-text" (click)="visible = false"></button>
+        <button pButton label="Ajouter" icon="pi pi-check" class="p-button-primary" [disabled]="form.invalid" type="submit"></button>
+      </p-footer>
+    </form>
+  </p-dialog>
+
+  <!-- Formulaire de mise à jour -->
+  <p-dialog header="Modifier un Diplôme" [(visible)]="editVisible" [modal]="true" [style]="{ width: '50rem' }">
+    <form *ngIf="editingDiplome" #editForm="ngForm" (ngSubmit)="onUpdateSubmit(editForm)">
+      <div class="p-field">
+        <label for="editLibelle">Libellé</label>
+        <input pInputText id="editLibelle" name="libelle" [(ngModel)]="editingDiplome.libelle" required #editLibelle="ngModel" />
+        <div *ngIf="editLibelle.invalid && editLibelle.touched" class="p-error">Libellé est requis</div>
+      </div>
+
+      <div class="p-field">
+        <label for="editTypeDiplome">Type de Diplôme</label>
+        <p-dropdown id="editTypeDiplome" [(ngModel)]="selectedTypeId" name="typeDiplome"
+          [options]="typeDiplomes" optionLabel="libelleTypeDiplome" optionValue="id"
+          placeholder="Sélectionnez un type" [showClear]="true">
+        </p-dropdown>
+        <div *ngIf="selectedTypeId == null" class="p-error">Type de diplôme est requis</div>
+      </div>
+
+      <p-footer>
+        <button pButton label="Annuler" icon="pi pi-times" class="p-button-text" (click)="editVisible = false"></button>
+        <button pButton label="Modifier" icon="pi pi-check" class="p-button-primary" [disabled]="editForm.invalid" type="submit"></button>
+      </p-footer>
+    </form>
+  </p-dialog>
+</div>
